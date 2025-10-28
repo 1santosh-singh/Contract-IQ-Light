@@ -21,7 +21,7 @@ async def health_check():
         supabase_status = "connected" if supabase_service.client else "disconnected"
         
         # Check embedding service
-        embedding_status = "loaded" if embedding_service.model else "not_loaded"
+        embedding_status = "api_only"
         
         return {
             "status": "healthy",
