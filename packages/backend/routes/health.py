@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from services.supabase_service import supabase_service
 from services.embedding_service import embedding_service
 
-router = APIRouter(prefix="/api", tags=["health"])
+router = APIRouter(tags=["health"])
 
 
 @router.get("/health")

@@ -32,15 +32,38 @@ app = FastAPI(
     description="AI-Powered Contract Analysis Platform"
 )
 
+# Custom CORS middleware for wildcard support
+@app.middleware("http")
+async def cors_middleware(request: Request, call_next):
+    """Custom CORS middleware with wildcard support."""
+    response = await call_next(request)
+    
+    origin = request.headers.get("origin")
+    if origin:
+        # Check if origin matches allowed patterns
+        allowed = False
+        for allowed_origin in settings.cors_origins:
+            if allowed_origin == "*":
+                allowed = True
+                break
+            elif allowed_origin.startswith("https://*.vercel.app"):
+                if origin.endswith(".vercel.app") and origin.startswith("https://"):
+                    allowed = True
+                    break
+            elif origin == allowed_origin:
+                allowed = True
+                break
+        
+        if allowed:
+            response.headers["Access-Control-Allow-Origin"] = origin
+            response.headers["Access-Control-Allow-Credentials"] = "true"
+            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response.headers["Access-Control-Allow-Headers"] = "*"
+    
+    return response
+
 # Add middleware
 app.add_middleware(GZipMiddleware, minimum_size=1000)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.cors_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # Add rate limiting middleware
 @app.middleware("http")
