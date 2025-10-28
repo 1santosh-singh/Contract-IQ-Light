@@ -2,11 +2,11 @@ services:
   - type: web
     name: contract-iq-backend
     env: docker
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    # Use Docker Hub image instead of building from source
+    image:
+      url: docker.io/yourusername/contract-iq-backend:latest
     plan: starter
     region: oregon
-    branch: main
     healthCheckPath: /health
     envVars:
       - key: PORT
