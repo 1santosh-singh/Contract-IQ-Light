@@ -4,7 +4,7 @@ services:
     env: docker
     # Use Docker Hub image instead of building from source
     image:
-      url: docker.io/yourusername/contract-iq-backend:latest
+      url: docker.io/santoshdev10/contract-iq-backend:latest
     plan: starter
     region: oregon
     healthCheckPath: /health
@@ -24,6 +24,6 @@ services:
       - key: HUGGINGFACE_API_KEY
         sync: false
       - key: CORS_ORIGINS
-        value: "https://contract-iq-light.vercel.app,https://*.vercel.app,http://localhost:3000"
+        value: "https://contractiq-ai.vercel.app,https://*.vercel.app,http://localhost:3000"
       - key: DEBUG
         value: "false"
