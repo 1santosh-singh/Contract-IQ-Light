@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Backgro
 from pypdf import PdfReader
 from docx import Document
 from io import BytesIO
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+
 
 from routes.auth import get_token, get_authenticated_supabase
 from services.supabase_service import supabase_service
@@ -25,6 +25,53 @@ from exceptions import DocumentProcessingError, ValidationError
 from config import settings
 
 router = APIRouter(prefix="/api", tags=["documents"])
+
+
+def split_text_into_chunks(text: str, chunk_size: int = 1000, chunk_overlap: int = 200) -> List[str]:
+    """
+    Split text into overlapping chunks.
+    
+    Args:
+        text: Text to split
+        chunk_size: Maximum chunk size
+        chunk_overlap: Overlap between chunks
+        
+    Returns:
+        List of text chunks
+    """
+    if not text or chunk_size <= 0:
+        return []
+    
+    chunks = []
+    separators = ["\n\n", "\n", ". ", "! ", "? ", "; ", ", ", " "]
+    
+    # Try to split by separators first
+    for separator in separators:
+        if separator in text:
+            parts = text.split(separator)
+            current_chunk = ""
+            
+            for part in parts:
+                if len(current_chunk) + len(part) + len(separator) <= chunk_size:
+                    current_chunk += part + separator
+                else:
+                    if current_chunk:
+                        chunks.append(current_chunk.strip())
+                    current_chunk = part + separator
+            
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+            
+            if chunks:
+                return chunks
+    
+    # Fallback: split by character count
+    for i in range(0, len(text), chunk_size - chunk_overlap):
+        chunk = text[i:i + chunk_size]
+        if chunk.strip():
+            chunks.append(chunk.strip())
+    
+    return chunks if chunks else [text]
 
 
 @router.post("/upload", response_model=DocumentUploadResponse)
@@ -92,13 +139,11 @@ async def upload_document(
         document_id = response.data[0]["id"]
         
         # Chunk text
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=settings.chunk_size,
-            chunk_overlap=settings.chunk_overlap,
-            length_function=len,
-            separators=["\n\n", "\n", ". ", "! ", "? ", "; ", ", ", " ", ""]
+        chunks = split_text_into_chunks(
+            text, 
+            chunk_size=settings.chunk_size, 
+            chunk_overlap=settings.chunk_overlap
         )
-        chunks = text_splitter.split_text(text)
         
         # Insert chunks
         chunk_data = [
@@ -226,16 +271,12 @@ async def process_document(text: str, user_id: str, document_id: str) -> dict:
         if not document_id:
             raise ValidationError("Document ID is required")
         
-        # Initialize text splitter
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=settings.chunk_size,
-            chunk_overlap=settings.chunk_overlap,
-            length_function=len,
-            separators=["\n\n", "\n", ". ", "! ", "? ", "; ", ", ", " ", ""]
-        )
-        
         # Split text into chunks
-        chunks = text_splitter.split_text(text)
+        chunks = split_text_into_chunks(
+            text, 
+            chunk_size=settings.chunk_size, 
+            chunk_overlap=settings.chunk_overlap
+        )
         
         if not chunks:
             return {
