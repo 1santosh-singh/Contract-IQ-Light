@@ -30,8 +30,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {backendUrl && <link rel="preconnect" href={backendUrl} />}
+      </head>
       <body className={`${roboto.className} antialiased`}>
         <ThemeProvider
           attribute="class"
