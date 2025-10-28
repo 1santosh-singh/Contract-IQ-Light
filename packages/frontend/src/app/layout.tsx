@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from '@/components/ui/sonner'
 import { Roboto } from "next/font/google";
+import { ThemeProvider } from 'next-themes'
 import "./globals.css";
 
 // Google Fonts
@@ -32,23 +33,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} antialiased`}>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  if (localStorage.theme === 'dark' || (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
-        <Toaster position="bottom-right" />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Toaster position="bottom-right" />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
