@@ -605,49 +605,101 @@ export default function HomePage() {
         {/* Footer Section */}
         <footer className="mx-0 px-4 sm:px-6 bg-gradient-to-r from-blue-900 to-blue-800 text-white dark:from-gray-900 dark:to-gray-800 pt-16 pb-4">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="space-y-6">
-              {/* Header Section */}
-              <div className="text-center">
+            {/* Desktop Layout */}
+            <div className="hidden md:flex md:justify-between md:items-start">
+              {/* Left Side - Contract IQ */}
+              <div className="md:w-1/3">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Contract IQ</h3>
-                <p className="text-gray-400 text-xs md:text-sm mb-6">
-                Simplify legal contracts with AI-powered analysis and insights. Get instant summaries, risk assessments, and intelligent search across all your documents securely and efficiently.
+                <p className="text-gray-400 text-sm mb-6">
+                  Simplify legal contracts with AI-powered analysis and insights. Get instant summaries, risk assessments, and intelligent search across all your documents securely and efficiently.
                 </p>
-                <div className="flex justify-center space-x-3">
-                  <a href="https://x.com/1_santoshsingh" className="p-1.5 md:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
-                    <Twitter className="h-4 w-4 md:h-5 md:w-5" />
+                <div className="flex space-x-3">
+                  <a href="https://x.com/1_santoshsingh" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Twitter className="h-5 w-5" />
                   </a>
-                  <a href="https://github.com/1santosh-singh" className="p-1.5 md:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
-                    <Github className="h-4 w-4 md:h-5 md:w-5" />
+                  <a href="https://github.com/1santosh-singh" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Github className="h-5 w-5" />
                   </a>
-                  <a href="https://www.linkedin.com/in/santosh-singh-sde" className="p-1.5 md:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
-                    <Linkedin className="h-4 w-4 md:h-5 md:w-5" />
+                  <a href="https://www.linkedin.com/in/santosh-singh-sde" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Linkedin className="h-5 w-5" />
                   </a>
                 </div>
               </div>
               
-              {/* Links Section - flex row on mobile, grid on larger screens */}
-              <div className="flex flex-row justify-between md:grid md:grid-cols-3 gap-4 md:gap-8">
+              {/* Right Side - Links */}
+              <div className="md:w-2/3 md:pl-8">
+                <div className="grid grid-cols-3 gap-8">
+                  <div>
+                    <h4 className="font-semibold text-white mb-4 text-base">Product</h4>
+                    <ul className="space-y-2">
+                      <li><a href="#home" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">Home</a></li>
+                      <li><a href="#features" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">Features</a></li>
+                      <li><a href="/pricing" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">Pricing</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-4 text-base">Company</h4>
+                    <ul className="space-y-2">
+                      <li><a href="/about" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">About</a></li>
+                      <li><a href="/blog" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">Blog</a></li>
+                      <li><a href="/contact" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">Contact</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-4 text-base">Legal</h4>
+                    <ul className="space-y-2">
+                      <li><a href="/privacy" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">Privacy</a></li>
+                      <li><a href="/terms" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-sm">Terms</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Mobile Layout */}
+            <div className="md:hidden space-y-6">
+              {/* Header Section */}
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-white mb-4">Contract IQ</h3>
+                <p className="text-gray-400 text-xs mb-6">
+                  Simplify legal contracts with AI-powered analysis and insights. Get instant summaries, risk assessments, and intelligent search across all your documents securely and efficiently.
+                </p>
+                <div className="flex justify-center space-x-3">
+                  <a href="https://x.com/1_santoshsingh" className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Twitter className="h-4 w-4" />
+                  </a>
+                  <a href="https://github.com/1santosh-singh" className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Github className="h-4 w-4" />
+                  </a>
+                  <a href="https://www.linkedin.com/in/santosh-singh-sde" className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+              
+              {/* Links Section - All in one row for mobile */}
+              <div className="flex flex-row justify-between gap-4">
                 <div>
-                  <h4 className="font-semibold text-white mb-2 md:mb-4 text-xs md:text-base">Product</h4>
-                  <ul className="space-y-1 md:space-y-2">
-                    <li><a href="#home" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Home</a></li>
-                    <li><a href="#features" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Features</a></li>
-                    <li><a href="/pricing" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Pricing</a></li>
+                  <h4 className="font-semibold text-white mb-2 text-xs">Legal</h4>
+                  <ul className="space-y-1">
+                    <li><a href="/privacy" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">Privacy</a></li>
+                    <li><a href="/terms" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">Terms</a></li>
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white mb-2 md:mb-4 text-xs md:text-base">Company</h4>
-                  <ul className="space-y-1 md:space-y-2">
-                    <li><a href="/about" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">About</a></li>
-                    <li><a href="/blog" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Blog</a></li>
-                    <li><a href="/contact" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Contact</a></li>
+                  <h4 className="font-semibold text-white mb-2 text-xs">Company</h4>
+                  <ul className="space-y-1">
+                    <li><a href="/about" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">About</a></li>
+                    <li><a href="/blog" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">Blog</a></li>
+                    <li><a href="/contact" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">Contact</a></li>
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white mb-2 md:mb-4 text-xs md:text-base">Legal</h4>
-                  <ul className="space-y-1 md:space-y-2">
-                    <li><a href="/privacy" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Privacy</a></li>
-                    <li><a href="/terms" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Terms</a></li>
+                  <h4 className="font-semibold text-white mb-2 text-xs">Product</h4>
+                  <ul className="space-y-1">
+                    <li><a href="#home" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">Home</a></li>
+                    <li><a href="#features" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">Features</a></li>
+                    <li><a href="/pricing" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs">Pricing</a></li>
                   </ul>
                 </div>
               </div>
