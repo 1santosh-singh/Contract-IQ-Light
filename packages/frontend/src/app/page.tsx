@@ -46,20 +46,22 @@ export default function HomePage() {
     if (isFirstVisit) {
       // First visit: staggered animation
       sections.forEach((section, index) => {
-        section.style.opacity = '0'
-        section.style.transform = 'translateY(20px)'
-        section.style.transition = 'all 0.6s ease-out'
+        const element = section as HTMLElement
+        element.style.opacity = '0'
+        element.style.transform = 'translateY(20px)'
+        element.style.transition = 'all 0.6s ease-out'
         
         setTimeout(() => {
-          section.style.opacity = '1'
-          section.style.transform = 'translateY(0)'
+          element.style.opacity = '1'
+          element.style.transform = 'translateY(0)'
         }, index * 200)
       })
     } else {
       // Subsequent visits: immediate visibility
       sections.forEach((section) => {
-        section.style.opacity = '1'
-        section.style.transform = 'translateY(0)'
+        const element = section as HTMLElement
+        element.style.opacity = '1'
+        element.style.transform = 'translateY(0)'
       })
     }
   }, [isFirstVisit])
