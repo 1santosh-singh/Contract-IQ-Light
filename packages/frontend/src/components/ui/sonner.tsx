@@ -10,24 +10,27 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
+      duration={2000}
       style={
         {
-          "--normal-bg": "#3b82f6",
-          "--normal-text": "#ffffff",
-          "--normal-border": "#1d4ed8",
-          "--success-bg": "linear-gradient(135deg, #e0f2fe, #bae6fd)",
-          "--success-text": "#1e293b",
-          "--error-bg": "#ef4444",
-          "--error-text": "#ffffff",
+          "--normal-bg": theme === "dark" ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.2)",
+          "--normal-text": theme === "dark" ? "#ffffff" : "#1f2937",
+          "--normal-border": theme === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)",
+          "--success-bg": theme === "dark" ? "rgba(34, 197, 94, 0.2)" : "rgba(34, 197, 94, 0.2)",
+          "--success-text": theme === "dark" ? "#ffffff" : "#000000",
+          "--error-bg": theme === "dark" ? "rgba(239, 68, 68, 0.2)" : "rgba(239, 68, 68, 0.2)",
+          "--error-text": theme === "dark" ? "#ffffff" : "#000000",
         } as React.CSSProperties
       }
       toastOptions={{
         style: {
-          backdropFilter: 'none',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           backgroundColor: 'var(--normal-bg)',
           color: 'var(--normal-text)',
           border: '1px solid var(--normal-border)',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          borderRadius: '16px',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
           opacity: 1,
         },
         classNames: {
