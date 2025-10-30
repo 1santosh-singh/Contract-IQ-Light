@@ -309,7 +309,7 @@ export default function DocumentQueryPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleDelete(recentDocumentId!)}
-                    className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full glass bg-destructive/20 hover:bg-destructive/30 border-destructive/50 text-destructive-foreground dark:text-white shadow-md backdrop-blur-sm"
+                    className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-700 dark:text-white hover:bg-white/30 dark:hover:bg-black/30 shadow-lg transition-all duration-200"
                   >
                     <X className="h-4 w-4" />
                   </Button>

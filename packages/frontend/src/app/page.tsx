@@ -41,33 +41,27 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
-    // For both first and subsequent visits, use IntersectionObserver for efficiency
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in')
-          observer.unobserve(entry.target)
-        }
-      })
-    }, {
-      threshold: 0.1,
-      rootMargin: '-20% 0px -20% 0px'
-    })
-  
     const sections = document.querySelectorAll('.section')
-    sections.forEach((section, index) => {
-      // For first visit, add staggered class via data attribute for CSS delay
-      if (isFirstVisit) {
-        section.setAttribute('data-delay', index.toString())
-      }
-      if (section.getBoundingClientRect().top < window.innerHeight) {
-        section.classList.add('animate-fade-in')
-      } else {
-        observer.observe(section)
-      }
-    })
-  
-    return () => observer.disconnect()
+    
+    if (isFirstVisit) {
+      // First visit: staggered animation
+      sections.forEach((section, index) => {
+        section.style.opacity = '0'
+        section.style.transform = 'translateY(20px)'
+        section.style.transition = 'all 0.6s ease-out'
+        
+        setTimeout(() => {
+          section.style.opacity = '1'
+          section.style.transform = 'translateY(0)'
+        }, index * 200)
+      })
+    } else {
+      // Subsequent visits: immediate visibility
+      sections.forEach((section) => {
+        section.style.opacity = '1'
+        section.style.transform = 'translateY(0)'
+      })
+    }
   }, [isFirstVisit])
 
   useEffect(() => {
@@ -309,7 +303,7 @@ export default function HomePage() {
 
   return (
     <MainLayout className="pt-0 pb-0" openChat={openChat} onCloseChat={() => setOpenChat(false)}>
-      <section id="home" className="-mt-16 pt-40 pb-24 mx-0 px-4 sm:px-6 bg-gradient-to-b from-blue-200 to-white dark:from-blue-900 dark:to-gray-900 section">
+      <section id="home" className="pt-24 pb-24 mx-0 px-4 sm:px-6 bg-gradient-to-b from-blue-200 to-white dark:from-blue-900 dark:to-gray-900 section">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left Side */}
@@ -322,12 +316,12 @@ export default function HomePage() {
               <p className="text-xl leading-relaxed text-muted-foreground dark:text-white max-w-md">
                 Upload, analyze, and understand contracts in seconds.
               </p>
-              {!user && (
+              {!loading && !user && (
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5" onClick={() => toast("Upload your document")}>
+                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 rounded-xl" onClick={() => toast("Upload your document")}>
                     Try for Free
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="border-border dark:border-white text-foreground dark:text-white hover:bg-accent/50 transition-all duration-300 transform hover:-translate-y-0.5">
+                  <Button size="lg" variant="outline" asChild className="border-border dark:border-white text-foreground dark:text-white hover:bg-accent/50 transition-all duration-300 transform hover:-translate-y-0.5 rounded-xl">
                     <Link href="/auth/signup">Sign Up →</Link>
                   </Button>
                 </div>
@@ -356,7 +350,7 @@ export default function HomePage() {
                     variant="ghost"
                     size="sm"
                     onClick={handleDelete}
-                    className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full glass bg-destructive/20 hover:bg-destructive/30 border-destructive/50 text-destructive-foreground dark:text-white shadow-md backdrop-blur-sm"
+                    className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-700 dark:text-white hover:bg-white/30 dark:hover:bg-black/30 shadow-lg transition-all duration-200"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -408,7 +402,7 @@ export default function HomePage() {
         </div>
       </section>
        {/* Powerful Features Section */}
-       <section id="features" className="mx-0 py-24 px-4 sm:px-6 bg-background section">
+       <section id="features" className="mx-0 py-24 px-4 sm:px-6 bg-gray-50 dark:bg-background section">
          <div className="max-w-7xl mx-auto">
            <div className="text-center space-y-4 mb-16">
              <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-4 py-2 text-sm font-medium mb-1">
@@ -422,7 +416,7 @@ export default function HomePage() {
              </p>
            </div>
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-             <div className={`bg-gray-50 dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-sm hover:shadow-lg dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border border-border dark:border-white hover:border-accent cursor-pointer`} onClick={() => {
+             <div className={`bg-white dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-md hover:shadow-xl dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-white hover:border-blue-300 dark:hover:border-accent cursor-pointer`} onClick={() => {
                if (!user) {
                  toast.error('Please log in to use summarization')
                  router.push('/auth/login')
@@ -431,11 +425,11 @@ export default function HomePage() {
                }
              }}>
                <div className="flex justify-center mb-4">
-                 <FileText className="h-6 w-6 text-primary dark:text-white opacity-70" />
+                 <FileText className="h-6 w-6 text-blue-600 dark:text-white opacity-70" />
                </div>
                <h3 className="text-lg font-bold mb-2 text-center text-card-foreground dark:text-white">Summarization</h3>
              </div>
-             <div className={`bg-gray-50 dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-sm hover:shadow-lg dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border border-border dark:border-white hover:border-accent cursor-pointer`} onClick={() => {
+             <div className={`bg-white dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-md hover:shadow-xl dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-white hover:border-red-300 dark:hover:border-accent cursor-pointer`} onClick={() => {
                if (!user) {
                  toast.error('Please log in to use clause risk analysis')
                  router.push('/auth/login')
@@ -444,17 +438,17 @@ export default function HomePage() {
                }
              }}>
                <div className="flex justify-center mb-4">
-                 <AlertTriangle className="h-6 w-6 text-destructive dark:text-white opacity-70" />
+                 <AlertTriangle className="h-6 w-6 text-red-600 dark:text-white opacity-70" />
                </div>
                <h3 className="text-lg font-bold mb-2 text-center text-card-foreground dark:text-white">Clause Risk Analysis</h3>
              </div>
-             <div className={`bg-gray-50 dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-sm hover:shadow-lg dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border border-border dark:border-white hover:border-accent cursor-pointer`} onClick={() => setOpenChat(true)}>
+             <div className={`bg-white dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-md hover:shadow-xl dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-white hover:border-green-300 dark:hover:border-accent cursor-pointer`} onClick={() => setOpenChat(true)}>
                <div className="flex justify-center mb-4">
-                 <MessageCircle className="h-6 w-6 text-primary dark:text-white opacity-70" />
+                 <MessageCircle className="h-6 w-6 text-green-600 dark:text-white opacity-70" />
                </div>
                <h3 className="text-lg font-bold mb-2 text-center text-card-foreground dark:text-white">AI Chatbot</h3>
              </div>
-             <div className="bg-gray-50 dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-sm hover:shadow-lg dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border border-border dark:border-white hover:border-accent cursor-pointer" onClick={() => {
+             <div className="bg-white dark:bg-gray-800/50 text-card-foreground rounded-lg p-8 shadow-md hover:shadow-xl dark:hover:shadow-black hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-white hover:border-purple-300 dark:hover:border-accent cursor-pointer" onClick={() => {
                if (!user) {
                  toast.error('Please log in to use document query')
                  router.push('/auth/login')
@@ -463,7 +457,7 @@ export default function HomePage() {
                }
              }}>
                <div className="flex justify-center mb-4">
-                 <Search className="h-6 w-6 text-primary dark:text-white opacity-70" />
+                 <Search className="h-6 w-6 text-purple-600 dark:text-white opacity-70" />
                </div>
                <h3 className="text-lg font-bold mb-2 text-center text-card-foreground dark:text-white">Document Query</h3>
              </div>
@@ -590,12 +584,12 @@ export default function HomePage() {
             <p className="text-base text-muted-foreground/70 dark:text-white/70 max-w-md mx-auto mt-0">
               Join thousands of professionals using Contract IQ to simplify, analyze, and secure their contracts with AI.
             </p>
-            {!user && (
+            {!loading && !user && (
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5" onClick={() => toast("Upload your document")}>
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 rounded-xl" onClick={() => toast("Upload your document")}>
                   Try For Free
                 </Button>
-                <Button size="lg" variant="outline" asChild className="border-border dark:border-white text-foreground dark:text-white hover:bg-accent/50 transition-all duration-300 transform hover:-translate-y-0.5">
+                <Button size="lg" variant="outline" asChild className="border-border dark:border-white text-foreground dark:text-white hover:bg-accent/50 transition-all duration-300 transform hover:-translate-y-0.5 rounded-xl">
                   <Link href="/auth/signup">Sign Up →</Link>
                 </Button>
               </div>
@@ -609,26 +603,26 @@ export default function HomePage() {
         {/* Footer Section */}
         <footer className="mx-0 px-4 sm:px-6 bg-gradient-to-r from-blue-900 to-blue-800 text-white dark:from-gray-900 dark:to-gray-800 pt-16 pb-4">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-8">
               <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-foreground dark:text-white">Contract IQ</h3>
+                <h3 className="text-2xl font-bold text-white">Contract IQ</h3>
                 <p className="text-gray-400 text-sm">
                   Simplify legal contracts with AI-powered analysis and insights. Get instant summaries, risk assessments, and intelligent search across all your documents securely and efficiently.
                 </p>
                 <div className="flex space-x-4 mt-4">
-                  <a href="https://twitter.com" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                  <a href="https://x.com/1_santoshsingh" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
                     <Twitter className="h-5 w-5" />
                   </a>
-                  <a href="https://github.com" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                  <a href="https://github.com/1santosh-singh" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
                     <Github className="h-5 w-5" />
                   </a>
-                  <a href="https://linkedin.com" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                  <a href="https://www.linkedin.com/in/santosh-singh-sde" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
                     <Linkedin className="h-5 w-5" />
                   </a>
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-foreground dark:text-white mb-4">Product</h4>
+                <h4 className="font-semibold text-white mb-4">Product</h4>
                 <ul className="space-y-2">
                   <li><a href="#home" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Home</a></li>
                   <li><a href="#features" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Features</a></li>
@@ -636,7 +630,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-foreground dark:text-white mb-4">Company</h4>
+                <h4 className="font-semibold text-white mb-4">Company</h4>
                 <ul className="space-y-2">
                   <li><a href="/about" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">About</a></li>
                   <li><a href="/blog" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Blog</a></li>
@@ -644,7 +638,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-foreground dark:text-white mb-4">Legal</h4>
+                <h4 className="font-semibold text-white mb-4">Legal</h4>
                 <ul className="space-y-2">
                   <li><a href="/privacy" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Privacy</a></li>
                   <li><a href="/terms" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Terms</a></li>

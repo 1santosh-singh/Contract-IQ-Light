@@ -9,6 +9,7 @@ const roboto = Roboto({
   subsets: ["latin"],
   display: "swap",
   weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
 });
 
 export const metadata: Metadata = {
@@ -37,12 +38,12 @@ export default function RootLayout({
       <head>
         {backendUrl && <link rel="preconnect" href={backendUrl} />}
       </head>
-      <body className={`${roboto.className} antialiased`}>
+      <body className={`${roboto.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
+          disableTransitionOnChange={false}
         >
           <Toaster position="bottom-right" />
           {children}

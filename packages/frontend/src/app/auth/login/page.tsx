@@ -106,22 +106,22 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 animate-fade-in bg-[radial-gradient(ellipse_at_top,_oklch(0.98_0.02_247.858),_oklch(0.95_0.01_264.695))] dark:bg-[radial-gradient(ellipse_at_top,_oklch(0.1_0.02_264.695),_oklch(0.05_0.01_264.695))]">
-      <Card className="w-full max-w-md glass-card">
+      <Card className="w-full max-w-md bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-xl">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center text-foreground">Welcome back</CardTitle>
-          <CardDescription className="text-center text-foreground">
+          <CardTitle className="text-2xl text-center text-gray-900 dark:text-white">Welcome back</CardTitle>
+          <CardDescription className="text-center text-gray-600 dark:text-gray-300">
             Sign in to your account to continue
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {error && (
-            <div className="bg-destructive/10 border border-destructive/30 text-foreground px-4 py-3 rounded-md text-sm">
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-md text-sm">
               {error}
             </div>
           )}
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-foreground">Email</Label>
+              <Label htmlFor="email" className="text-gray-900 dark:text-white">Email</Label>
               <Controller
                 name="email"
                 control={form.control}
@@ -131,17 +131,17 @@ export default function LoginPage() {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="glass-input"
+                    className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
                     autoComplete="off"
                   />
                 )}
               />
               {form.formState.errors.email && (
-                <p className="text-sm text-foreground">{form.formState.errors.email.message}</p>
+                <p className="text-sm text-red-600 dark:text-red-400">{form.formState.errors.email.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-foreground">Password</Label>
+              <Label htmlFor="password" className="text-gray-900 dark:text-white">Password</Label>
               <div className="relative">
                 <Controller
                   name="password"
@@ -152,7 +152,7 @@ export default function LoginPage() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      className="glass-input pr-10"
+                      className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white pr-10"
                       autoComplete="new-password"
                     />
                   )}
@@ -161,7 +161,7 @@ export default function LoginPage() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-foreground"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -201,10 +201,10 @@ export default function LoginPage() {
                 </Button>
               </div>
               {form.formState.errors.password && (
-                <p className="text-sm text-foreground">{form.formState.errors.password.message}</p>
+                <p className="text-sm text-red-600 dark:text-red-400">{form.formState.errors.password.message}</p>
               )}
             </div>
-            <Button type="submit" className="w-full glass-button" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
           </form>
@@ -213,7 +213,7 @@ export default function LoginPage() {
               <span className="w-full border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-foreground">Or continue with</span>
+              <span className="bg-white dark:bg-gray-900 px-2 text-gray-600 dark:text-gray-300">Or continue with</span>
             </div>
           </div>
           <Button
@@ -221,7 +221,7 @@ export default function LoginPage() {
             variant="outline"
             onClick={handleGoogleSignIn}
             disabled={isLoading}
-            className="w-full glass-button"
+            className="w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
               <path
@@ -243,9 +243,9 @@ export default function LoginPage() {
             </svg>
             Continue with Google
           </Button>
-          <div className="text-center text-sm text-foreground">
+          <div className="text-center text-sm text-gray-600 dark:text-gray-300">
             Don't have an account?{' '}
-            <Link href="/auth/signup" className="text-primary hover:underline">
+            <Link href="/auth/signup" className="text-blue-600 dark:text-blue-400 hover:underline">
               Sign up
             </Link>
           </div>

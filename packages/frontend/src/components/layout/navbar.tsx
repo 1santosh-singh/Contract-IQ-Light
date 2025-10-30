@@ -64,31 +64,35 @@ export function Navbar({ className, onToggleTheme, isDark = false }: NavbarProps
   return (
     <header
       className={cn(
-        "bg-transparent backdrop-blur-md sticky top-0 z-40 w-full fixed left-0 right-0",
+        "bg-white/[0.01] dark:bg-black/[0.01] backdrop-blur-md sticky top-0 z-50 w-full fixed left-0 right-0 border-b border-white/10 dark:border-white/5",
         className
       )}
+      style={{
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)'
+      }}
     >
       <div className="flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         {/* Left Section - Logo */}
         <div className="flex items-center">
-          <h1 className="text-xl font-bold text-foreground dark:text-white">Contract IQ</h1>
+          <h1 className="text-xl font-bold text-foreground">Contract IQ</h1>
         </div>
 
         {/* Center Section - Navigation Links */}
-        <div className="hidden md:flex items-center gap-4 flex-1 justify-center">
+        <div className="hidden md:flex items-center gap-8 flex-1 justify-center">
           <NavigationMenu>
-            <NavigationMenuList>
+            <NavigationMenuList className="gap-8">
               <NavigationMenuItem>
-                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "text-foreground dark:text-white hover:text-blue-600 dark:hover:text-blue-400")} href="#home">Home</NavigationMenuLink>
+                <NavigationMenuLink className="text-foreground hover:text-blue-600 transition-colors bg-transparent hover:bg-transparent font-semibold" href="#home">Home</NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "text-foreground dark:text-white hover:text-blue-600 dark:hover:text-blue-400")} href="#features">Features</NavigationMenuLink>
+                <NavigationMenuLink className="text-foreground hover:text-blue-600 transition-colors bg-transparent hover:bg-transparent font-semibold" href="#features">Features</NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "text-foreground dark:text-white hover:text-blue-600 dark:hover:text-blue-400")} href="/pricing">Pricing</NavigationMenuLink>
+                <NavigationMenuLink className="text-foreground hover:text-blue-600 transition-colors bg-transparent hover:bg-transparent font-semibold" href="#pricing">Pricing</NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "text-foreground dark:text-white hover:text-blue-600 dark:hover:text-blue-400")} href="/about">About</NavigationMenuLink>
+                <NavigationMenuLink className="text-foreground hover:text-blue-600 transition-colors bg-transparent hover:bg-transparent font-semibold" href="#about">About</NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
@@ -101,9 +105,9 @@ export function Navbar({ className, onToggleTheme, isDark = false }: NavbarProps
             variant="ghost"
             size="sm"
             onClick={onToggleTheme}
-            className="bg-white/10 dark:bg-gray-800/30 backdrop-blur-md border border-white/20 dark:border-gray-600/50 rounded-xl px-3 py-1.5 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-all duration-300 shadow-lg hover:shadow-xl text-foreground dark:text-white font-medium"
+            className="text-foreground hover:text-blue-600 transition-colors duration-300 bg-white/10 dark:bg-black/10 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-xl"
           >
-            {isDark ? <Sun className={`h-4 w-4 text-foreground dark:text-white transition-colors duration-300 ${animate ? 'animate-pulse' : ''}`} /> : <Moon className={`h-4 w-4 text-foreground dark:text-white transition-colors duration-300 ${animate ? 'animate-pulse' : ''}`} />}
+            {isDark ? <Sun className={`h-4 w-4 transition-colors duration-300 ${animate ? 'animate-pulse' : ''}`} /> : <Moon className={`h-4 w-4 transition-colors duration-300 ${animate ? 'animate-pulse' : ''}`} />}
           </Button>
 
           {/* Auth State */}
@@ -162,14 +166,14 @@ export function Navbar({ className, onToggleTheme, isDark = false }: NavbarProps
               <Button
                 variant="default"
                 asChild
-                className="bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700 backdrop-blur-md rounded-xl px-4 py-2 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl text-white font-medium"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl"
               >
                 <Link href="/auth/signup">Sign up</Link>
               </Button>
               <Button
                 variant="outline"
                 asChild
-                className="bg-white/10 dark:bg-gray-800/30 backdrop-blur-md border border-white/20 dark:border-gray-600/50 rounded-xl px-4 py-2 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-all duration-300 shadow-lg hover:shadow-xl text-black dark:text-white font-medium"
+                className="bg-white/10 dark:bg-black/10 backdrop-blur-sm text-foreground hover:bg-white/20 dark:hover:bg-black/20 border-0 rounded-xl shadow-lg hover:shadow-xl"
               >
                 <Link href="/auth/login">Login</Link>
               </Button>

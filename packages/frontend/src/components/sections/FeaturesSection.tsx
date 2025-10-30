@@ -64,7 +64,7 @@ export const FeaturesSection: React.FC = () => {
   ]
 
   return (
-    <section id="features" className="mx-0 py-24 px-4 sm:px-6 bg-background section">
+    <section id="features" className="mx-0 py-24 px-4 sm:px-6 bg-gray-50 dark:bg-background section">
       <div className="max-w-7xl mx-auto">
         <div className="text-center space-y-4 mb-16">
           <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-4 py-2 text-sm font-medium mb-1">

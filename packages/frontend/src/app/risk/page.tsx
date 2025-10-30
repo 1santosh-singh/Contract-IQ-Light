@@ -286,7 +286,7 @@ export default function RiskAnalysisPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleDelete(recentDocumentId!)}
-                  className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full glass bg-destructive/20 hover:bg-destructive/30 border-destructive/50 text-destructive-foreground dark:text-white shadow-md backdrop-blur-sm"
+                  className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-white/20 text-gray-700 dark:text-white hover:bg-white/30 dark:hover:bg-black/30 shadow-lg transition-all duration-200"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -390,7 +390,7 @@ export default function RiskAnalysisPage() {
             <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] modal-content">
               <div
                 className="prose prose-lg dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: riskAnalysisText }}
+                dangerouslySetInnerHTML={{ __html: riskAnalysisText.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&') }}
               />
             </div>
           </div>
