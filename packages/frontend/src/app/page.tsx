@@ -605,46 +605,51 @@ export default function HomePage() {
         {/* Footer Section */}
         <footer className="mx-0 px-4 sm:px-6 bg-gradient-to-r from-blue-900 to-blue-800 text-white dark:from-gray-900 dark:to-gray-800 pt-16 pb-4">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-8">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-white">Contract IQ</h3>
-                <p className="text-gray-400 text-sm">
-                  Simplify legal contracts with AI-powered analysis and insights. Get instant summaries, risk assessments, and intelligent search across all your documents securely and efficiently.
+            <div className="space-y-6">
+              {/* Header Section */}
+              <div className="text-center">
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Contract IQ</h3>
+                <p className="text-gray-400 text-xs md:text-sm mb-6">
+                Simplify legal contracts with AI-powered analysis and insights. Get instant summaries, risk assessments, and intelligent search across all your documents securely and efficiently.
                 </p>
-                <div className="flex space-x-4 mt-4">
-                  <a href="https://x.com/1_santoshsingh" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
-                    <Twitter className="h-5 w-5" />
+                <div className="flex justify-center space-x-3">
+                  <a href="https://x.com/1_santoshsingh" className="p-1.5 md:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Twitter className="h-4 w-4 md:h-5 md:w-5" />
                   </a>
-                  <a href="https://github.com/1santosh-singh" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
-                    <Github className="h-5 w-5" />
+                  <a href="https://github.com/1santosh-singh" className="p-1.5 md:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Github className="h-4 w-4 md:h-5 md:w-5" />
                   </a>
-                  <a href="https://www.linkedin.com/in/santosh-singh-sde" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
-                    <Linkedin className="h-5 w-5" />
+                  <a href="https://www.linkedin.com/in/santosh-singh-sde" className="p-1.5 md:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-primary transition-all duration-300">
+                    <Linkedin className="h-4 w-4 md:h-5 md:w-5" />
                   </a>
                 </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-white mb-4">Product</h4>
-                <ul className="space-y-2">
-                  <li><a href="#home" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Home</a></li>
-                  <li><a href="#features" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Features</a></li>
-                  <li><a href="/pricing" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Pricing</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-white mb-4">Company</h4>
-                <ul className="space-y-2">
-                  <li><a href="/about" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">About</a></li>
-                  <li><a href="/blog" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Blog</a></li>
-                  <li><a href="/contact" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Contact</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-white mb-4">Legal</h4>
-                <ul className="space-y-2">
-                  <li><a href="/privacy" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Privacy</a></li>
-                  <li><a href="/terms" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline">Terms</a></li>
-                </ul>
+              
+              {/* Links Section - flex row on mobile, grid on larger screens */}
+              <div className="flex flex-row justify-between md:grid md:grid-cols-3 gap-4 md:gap-8">
+                <div>
+                  <h4 className="font-semibold text-white mb-2 md:mb-4 text-xs md:text-base">Product</h4>
+                  <ul className="space-y-1 md:space-y-2">
+                    <li><a href="#home" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Home</a></li>
+                    <li><a href="#features" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Features</a></li>
+                    <li><a href="/pricing" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Pricing</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white mb-2 md:mb-4 text-xs md:text-base">Company</h4>
+                  <ul className="space-y-1 md:space-y-2">
+                    <li><a href="/about" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">About</a></li>
+                    <li><a href="/blog" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Blog</a></li>
+                    <li><a href="/contact" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Contact</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white mb-2 md:mb-4 text-xs md:text-base">Legal</h4>
+                  <ul className="space-y-1 md:space-y-2">
+                    <li><a href="/privacy" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Privacy</a></li>
+                    <li><a href="/terms" className="text-gray-400 hover:text-blue-300 transition-all duration-200 hover:underline text-xs md:text-sm">Terms</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
             <div className="mt-6 pt-4 border-t border-white/10 text-center">
