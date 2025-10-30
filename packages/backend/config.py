@@ -29,7 +29,6 @@ class Settings(BaseSettings):
     # API Keys
     openrouter_api_key: Optional[str] = None
     openrouter_api_key_fallback: Optional[str] = None
-    huggingface_api_key: Optional[str] = None
     
     # Application Settings
     app_name: str = "Contract IQ Backend"
@@ -51,8 +50,7 @@ class Settings(BaseSettings):
     ]
     
     # Model Settings
-    embedding_model_name: str = "nlpaueb/legal-bert-base-uncased"
-    fallback_embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    embedding_model_name: str = "hash-based"
     
     # Processing Settings
     chunk_size: int = 800

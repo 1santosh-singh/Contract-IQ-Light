@@ -9,6 +9,7 @@ import json
 import hashlib
 
 from config import settings
+from datetime import datetime, timedelta
 
 
 class SimpleCache:
@@ -181,4 +182,17 @@ def cache_ai_response(prompt: str, response: str) -> None:
 def get_cached_ai_response(prompt: str) -> Optional[str]:
     """Get cached AI response for prompt."""
     key = f"ai_response:{hashlib.md5(prompt.encode()).hexdigest()}"
+    return cache.get(key)
+
+
+# Enhanced caching for document operations
+def cache_document_analysis(doc_id: str, operation: str, result: str) -> None:
+    """Cache document analysis results."""
+    key = f"doc_analysis:{doc_id}:{operation}"
+    cache.set(key, result, 3600)  # 1 hour TTL
+
+
+def get_cached_document_analysis(doc_id: str, operation: str) -> Optional[str]:
+    """Get cached document analysis."""
+    key = f"doc_analysis:{doc_id}:{operation}"
     return cache.get(key)

@@ -7,6 +7,7 @@ from openai import AsyncOpenAI, AuthenticationError, RateLimitError
 
 from config import settings
 from exceptions import AIServiceError
+from utils.cache import get_cached_document_analysis, cache_document_analysis
 
 
 class AIService:
@@ -42,7 +43,7 @@ class AIService:
     async def chat_completion(
         self, 
         messages: List[Dict[str, str]], 
-        model: str = "nvidia/nemotron-nano-9b-v2:free",
+        model: str = "meta-llama/llama-3.2-3b-instruct:free",
         max_tokens: int = 500,
         temperature: float = 0.7
     ) -> str:

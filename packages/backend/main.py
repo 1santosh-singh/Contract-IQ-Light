@@ -91,9 +91,9 @@ async def startup_event():
     try:
         success = await embedding_service.initialize_model()
         if success:
-            print("[INFO] LegalBERT model loaded successfully")
+            print("[INFO] Embedding service initialized successfully")
         else:
-            print("[WARNING] LegalBERT model failed to load, will use API fallback")
+            print("[WARNING] Embedding service failed to initialize")
     except Exception as e:
         print(f"[WARNING] Embedding service initialization failed: {e}")
     
