@@ -26,12 +26,8 @@ export default function HomePage() {
 
   const supabase = useMemo(() => createClient(), [])
   useEffect(() => {
-    const visited = localStorage.getItem('visited')
-    if (visited) {
-      setIsFirstVisit(false)
-    } else {
-      localStorage.setItem('visited', 'true')
-    }
+    // Always show animations on page load
+    setIsFirstVisit(true)
 
     // Check for recent upload to show success tick
     const recentId = localStorage.getItem('recentDocumentId')
@@ -41,30 +37,43 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
-    const sections = document.querySelectorAll('.section')
-    
-    if (isFirstVisit) {
-      // First visit: staggered animation
-      sections.forEach((section, index) => {
-        const element = section as HTMLElement
-        element.style.opacity = '0'
-        element.style.transform = 'translateY(20px)'
-        element.style.transition = 'all 0.6s ease-out'
-        
-        setTimeout(() => {
-          element.style.opacity = '1'
-          element.style.transform = 'translateY(0)'
-        }, index * 200)
-      })
-    } else {
-      // Subsequent visits: immediate visibility
+    // Wait for DOM to be fully ready
+    const timer = setTimeout(() => {
+      const sections = document.querySelectorAll('.section')
+      
+      // Set initial state for all sections
       sections.forEach((section) => {
         const element = section as HTMLElement
-        element.style.opacity = '1'
-        element.style.transform = 'translateY(0)'
+        element.style.opacity = '0'
+        element.style.transform = 'translateY(30px)'
+        element.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
       })
-    }
-  }, [isFirstVisit])
+
+      // Create intersection observer for scroll animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const element = entry.target as HTMLElement
+              element.style.opacity = '1'
+              element.style.transform = 'translateY(0)'
+              observer.unobserve(element)
+            }
+          })
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        }
+      )
+
+      sections.forEach((section) => {
+        observer.observe(section)
+      })
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
 
