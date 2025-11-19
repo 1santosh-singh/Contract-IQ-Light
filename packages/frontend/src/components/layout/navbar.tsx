@@ -98,12 +98,9 @@ export function Navbar({ className, onToggleTheme, isDark = false }: NavbarProps
             variant="ghost"
             size="sm"
             onClick={onToggleTheme}
-            className="text-foreground hover:text-blue-600 bg-white/10 dark:bg-black/10 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-xl transition-all duration-200 ease-in-out"
+            className="text-foreground hover:text-blue-600 transition-colors duration-200 bg-white/10 dark:bg-black/10 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-xl"
           >
-            <div className="relative w-4 h-4 overflow-hidden">
-              <Sun className={`absolute inset-0 h-4 w-4 transition-all duration-300 ease-in-out ${isDark ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'}`} />
-              <Moon className={`absolute inset-0 h-4 w-4 transition-all duration-300 ease-in-out ${isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`} />
-            </div>
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
 
           {/* Auth State */}
