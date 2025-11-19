@@ -96,22 +96,22 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 animate-fade-in bg-[radial-gradient(ellipse_at_top,_oklch(0.98_0.02_247.858),_oklch(0.95_0.01_264.695))] dark:bg-[radial-gradient(ellipse_at_top,_oklch(0.1_0.02_264.695),_oklch(0.05_0.01_264.695))]">
-      <Card className="w-full max-w-md glass-card">
+      <Card className="w-full max-w-md bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-xl">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center text-foreground">Create account</CardTitle>
-          <CardDescription className="text-center text-foreground">
+          <CardTitle className="text-2xl text-center text-gray-900 dark:text-white">Create account</CardTitle>
+          <CardDescription className="text-center text-gray-600 dark:text-gray-300">
             Enter your details to get started
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {error && (
-            <div className="bg-destructive/10 border border-destructive/30 text-foreground px-4 py-3 rounded-md text-sm">
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-md text-sm">
               {error}
             </div>
           )}
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-foreground">Full Name</Label>
+              <Label htmlFor="name" className="text-gray-900 dark:text-white">Full Name</Label>
               <Controller
                 name="name"
                 control={form.control}
@@ -121,17 +121,17 @@ export default function SignupPage() {
                     id="name"
                     type="text"
                     placeholder="Enter your full name"
-                    className="glass-input"
+                    className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
                     autoComplete="off"
                   />
                 )}
               />
               {form.formState.errors.name && (
-                <p className="text-sm text-foreground">{form.formState.errors.name.message}</p>
+                <p className="text-sm text-red-600 dark:text-red-400">{form.formState.errors.name.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-foreground">Email</Label>
+              <Label htmlFor="email" className="text-gray-900 dark:text-white">Email</Label>
               <Controller
                 name="email"
                 control={form.control}
@@ -141,17 +141,17 @@ export default function SignupPage() {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="glass-input"
+                    className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
                     autoComplete="off"
                   />
                 )}
               />
               {form.formState.errors.email && (
-                <p className="text-sm text-foreground">{form.formState.errors.email.message}</p>
+                <p className="text-sm text-red-600 dark:text-red-400">{form.formState.errors.email.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-foreground">Password</Label>
+              <Label htmlFor="password" className="text-gray-900 dark:text-white">Password</Label>
               <div className="relative">
                 <Controller
                   name="password"
@@ -162,7 +162,7 @@ export default function SignupPage() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      className="glass-input pr-10"
+                      className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white pr-10"
                       autoComplete="new-password"
                     />
                   )}
@@ -171,7 +171,7 @@ export default function SignupPage() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-foreground"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -211,10 +211,10 @@ export default function SignupPage() {
                 </Button>
               </div>
               {form.formState.errors.password && (
-                <p className="text-sm text-foreground">{form.formState.errors.password.message}</p>
+                <p className="text-sm text-red-600 dark:text-red-400">{form.formState.errors.password.message}</p>
               )}
             </div>
-            <Button type="submit" className="w-full glass-button" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={isLoading}>
               {isLoading ? 'Creating account...' : 'Create account'}
             </Button>
           </form>
@@ -223,7 +223,7 @@ export default function SignupPage() {
               <span className="w-full border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-foreground">Or continue with</span>
+              <span className="bg-white dark:bg-gray-900 px-2 text-gray-600 dark:text-gray-300">Or continue with</span>
             </div>
           </div>
           <Button
@@ -231,7 +231,7 @@ export default function SignupPage() {
             variant="outline"
             onClick={handleGoogleSignUp}
             disabled={isLoading}
-            className="w-full glass-button"
+            className="w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
               <path
@@ -253,9 +253,9 @@ export default function SignupPage() {
             </svg>
             Continue with Google
           </Button>
-          <div className="text-center text-sm text-foreground">
+          <div className="text-center text-sm text-gray-600 dark:text-gray-300">
             Already have an account?{' '}
-            <Link href="/auth/login" className="text-primary hover:underline">
+            <Link href="/auth/login" className="text-blue-600 dark:text-blue-400 hover:underline">
               Sign in
             </Link>
           </div>
