@@ -76,6 +76,10 @@ export function MainLayout({ children, className, openChat, onCloseChat }: MainL
 
   const toggleTheme = () => {
     const newTheme = !isDark
+    
+    // Add transition class before theme change
+    document.documentElement.style.transition = 'background-color 0.3s ease, color 0.3s ease'
+    
     setIsDark(newTheme)
     
     if (newTheme) {
@@ -85,6 +89,11 @@ export function MainLayout({ children, className, openChat, onCloseChat }: MainL
       document.documentElement.classList.remove("dark")
       localStorage.setItem("theme", "light")
     }
+    
+    // Remove transition after theme change
+    setTimeout(() => {
+      document.documentElement.style.transition = ''
+    }, 300)
   }
 
   const handleSend = async () => {
