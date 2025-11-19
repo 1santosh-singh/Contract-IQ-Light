@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import ReactMarkdown from 'react-markdown'
-import { MessageCircle, Send, Bot, X, Minus, Maximize2, Upload } from "lucide-react"
+import { MessageCircle, Send, Bot, X, Minus, Maximize2, Upload, Loader2 } from "lucide-react"
 import { createClient } from '@/lib/supabase'
 import { User } from '@supabase/supabase-js'
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
@@ -184,20 +184,20 @@ export function MainLayout({ children, className, openChat, onCloseChat }: MainL
         onClick={() => {
           setChatState('normal')
         }}
-        className={`fixed bottom-2 right-2 md:bottom-4 md:right-4 lg:bottom-6 lg:right-6 h-12 w-12 md:h-14 md:w-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg z-40 transition-all duration-300 ease-out ${chatState !== 'minimized' ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}
+        className={`fixed bottom-6 right-6 h-14 w-14 md:h-16 md:w-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl z-[9999] transition-all duration-300 ease-out ${chatState !== 'minimized' ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'} flex items-center justify-center`}
       >
-          <MessageCircle className="h-5 w-5 md:h-6 md:w-6" />
+          <MessageCircle className="h-6 w-6 md:h-8 md:w-8 text-white" />
         </Button>
 
       {/* Floating Chatbot Window */}
-      <div className={`fixed transition-all duration-300 ease-out transform origin-bottom-right ${
+      <div className={`fixed z-50 transition-all duration-300 ease-out transform origin-bottom-right ${
         chatState === 'maximized'
           ? 'top-0 left-0 w-full h-full sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-[70vw] sm:h-[80vh] bg-white dark:bg-gray-900 border border-border rounded-lg shadow-2xl'
           : 'bottom-0 right-0 w-full h-[55vh] sm:bottom-4 sm:right-4 sm:w-96 sm:max-h-[85vh]'
-      } ${chatState === 'minimized' ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'} ${isMaximized ? '' : 'bg-white/10 dark:bg-gray-800/30 backdrop-blur-xl border-white/20 dark:border-gray-700/30 rounded-2xl shadow-2xl'} z-50 overflow-hidden`}>
+      } ${chatState === 'minimized' ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'} ${chatState === 'maximized' ? '' : 'bg-white/10 dark:bg-gray-800/30 backdrop-blur-xl border-white/20 dark:border-gray-700/30 rounded-2xl shadow-2xl'} overflow-hidden`}>
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 backdrop-blur-md">
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 border-b border-border">
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center">
                   <Bot className="h-6 w-6 text-white" />
@@ -227,7 +227,13 @@ export function MainLayout({ children, className, openChat, onCloseChat }: MainL
             </div>
 
             {/* Chat Messages */}
-            <div className="chat-messages flex-1 overflow-y-auto p-4 space-y-4 max-h-[calc(80vh-120px)] rounded-t-2xl">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 chat-messages">
+              {messages.length === 0 && !isTyping && (
+                <div className="text-center py-8">
+                  <MessageCircle className="h-12 w-12 mx-auto mb-4 text-muted-foreground dark:text-gray-400" />
+                  <p className="text-lg text-foreground dark:text-white">How can I help you today?</p>
+                </div>
+              )}
               {messages.map((msg, index) => (
                 <div key={index} className={`flex ${msg.role === 'bot' ? 'justify-start' : 'justify-end'}`}>
                   <div className={`flex flex-col ${msg.role === 'bot' ? 'items-start' : 'items-end'} max-w-[70%]`}>
@@ -266,14 +272,14 @@ export function MainLayout({ children, className, openChat, onCloseChat }: MainL
             </div>
 
             {/* Input Area */}
-            <div className={`px-4 py-2 border-t ${isMaximized ? 'border-border bg-white dark:bg-gray-900' : 'border-white/20 dark:border-gray-700/30 bg-white/5 dark:bg-gray-800/50 backdrop-blur-md'}`}>
+            <div className={`px-4 py-2 border-t ${chatState === 'maximized' ? 'border-border bg-white dark:bg-gray-900' : 'border-white/20 dark:border-gray-700/30 bg-white/5 dark:bg-gray-800/50 backdrop-blur-md'}`}>
               <div className="flex items-stretch gap-2">
                 <Textarea
                   ref={textareaRef}
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Ask about contracts..."
-                  className={`flex-1 transition-all duration-200 ease-in-out ${isMaximized ? 'bg-muted/20 dark:bg-gray-800/30 border-border' : 'bg-white/20 dark:bg-gray-800/70 backdrop-blur-md border border-gray-300 dark:border-gray-600'} text-gray-900 dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-400`}
+                  className={`flex-1 transition-all duration-200 ease-in-out ${chatState === 'maximized' ? 'bg-muted/20 dark:bg-gray-800/30 border-border' : 'bg-white/20 dark:bg-gray-800/70 backdrop-blur-md border border-gray-300 dark:border-gray-600'} text-gray-900 dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-400 resize-none`}
                   style={{ height: textareaHeight }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
@@ -285,9 +291,9 @@ export function MainLayout({ children, className, openChat, onCloseChat }: MainL
                 <Button
                   onClick={handleSend}
                   disabled={!inputValue.trim()}
-                  className={`flex-shrink-0 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg h-16 w-16 overflow-hidden flex items-center justify-center`}
+                  className="flex-shrink-0 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg h-16 w-16 overflow-hidden flex items-center justify-center"
                 >
-                  <Send className="h-14 w-14" />
+                  {isTyping ? <Loader2 className="h-14 w-14 animate-spin" /> : <Send className="h-14 w-14" />}
                 </Button>
               </div>
 
