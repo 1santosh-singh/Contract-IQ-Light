@@ -1,4 +1,6 @@
-
+/* stylelint-disable at-rule-no-unknown */
+/* postcss-disable-next-line */
+/* Tailwind CSS directives - these are valid and processed by PostCSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -54,40 +56,28 @@
     transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   }
 
-  body {
-    @apply bg-background text-foreground font-sans;
-    min-height: 100vh;
-    margin: 0 !important;
-    padding-right: calc(100vw - 100%);
-    overflow-y: scroll;
-    overflow-x: hidden;
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
   }
 
-  /* Hide scrollbar but keep functionality */
   html::-webkit-scrollbar {
     display: none;
   }
 
-  body::-webkit-scrollbar {
-    display: none;
-  }
-
-  html {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-  }
-
   body {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-  }
-  
-
-
-  html, body {
-    margin: 0;
+    @apply bg-background text-foreground font-sans;
+    min-height: 100vh;
+    margin: 0 !important;
     padding: 0;
     scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -155,8 +145,12 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: var(--color-muted-foreground);
+    background-color: #6b7280;
     animation: typing 1.4s infinite;
+  }
+
+  .dark .typing-dot {
+    background-color: #9ca3af;
   }
 
   .typing-dot:nth-child(2) {
