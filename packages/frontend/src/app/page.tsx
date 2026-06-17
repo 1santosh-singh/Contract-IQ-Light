@@ -718,7 +718,7 @@ export default function HomePage() {
                 © 2025 Contract IQ. All rights reserved.
               </p>
               <p className="text-gray-400 text-sm mt-2">
-                Made with ❤️ by Santosh Singh
+                Made with ❤️ by Aakash Meghavath
               </p>
             </div>
           </div>
